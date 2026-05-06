@@ -1,8 +1,8 @@
 {
   "bot-account": {
     "username": "mayankhuhu2",
-    "password": "12345678",
-    "type": "microsoft"
+    "password": "",
+    "type": "ofline"
   },
 
   "server": {
