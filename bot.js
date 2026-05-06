@@ -2,6 +2,7 @@ const mineflayer = require('mineflayer');
 const Movements = require('mineflayer-pathfinder').Movements;
 const pathfinder = require('mineflayer-pathfinder').pathfinder;
 const { GoalBlock, GoalXZ } = require('mineflayer-pathfinder').goals;
+const readline = require('readline');
 
 const config = require('./settings.json');
 
@@ -23,6 +24,30 @@ function createBot() {
    const defaultMove = new Movements(bot, mcData);
    bot.settings.colorsEnabled = false;
    bot.pathfinder.setMovements(defaultMove);
+
+   const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+   });
+
+   /* ---------------- CONSOLE COMMANDS ---------------- */
+
+   rl.on('line', (input) => {
+
+      if (input === 'melon') {
+         bot.chat('/server melon');
+         logger.info('Joining melon server...');
+      }
+
+      else if (input === 'survival') {
+         bot.chat('/queue survival');
+         logger.info('Queueing survival...');
+      }
+
+      else {
+         bot.chat(input);
+      }
+   });
 
    bot.once('spawn', () => {
       logger.info("Bot joined to the server");
@@ -112,9 +137,21 @@ function createBot() {
       }
    });
 
+   /* ---------------- IN-GAME CHAT COMMANDS ---------------- */
+
    bot.on('chat', (username, message) => {
+      if (username === bot.username) return;
+
       if (config.utils['chat-log']) {
          logger.info(`<${username}> ${message}`);
+      }
+
+      if (message === '!melon') {
+         bot.chat('/server melon');
+      }
+
+      if (message === '!survival') {
+         bot.chat('/queue survival');
       }
    });
 
@@ -157,8 +194,7 @@ function createBot() {
 }
 
 function circleWalk(bot, radius) {
-   // Make bot walk in square with center in bot's  wthout stopping
-    return new Promise(() => {
+   return new Promise(() => {
         const pos = bot.entity.position;
         const x = pos.x;
         const y = pos.y;
@@ -181,3 +217,16 @@ function circleWalk(bot, radius) {
 }
 
 createBot();
+```
+
+## Commands
+
+### Console
+
+* `melon` → `/server melon`
+* `survival` → `/queue survival`
+
+### In-game chat
+
+* `!melon` → `/server melon`
+* `!survival` → `/queue survival`
