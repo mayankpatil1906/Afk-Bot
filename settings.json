@@ -1,12 +1,12 @@
 {
   "bot-account": {
-    "username": "bot",
-    "password": "your_password",
+    "username": "mayankhuhu2",
+    "password": "12345678",
     "type": "microsoft"
   },
 
   "server": {
-    "ip": "localhost",
+    "ip": "play.applemc.fun",
     "port": 25565,
     "version": "1.19.3"
   },
@@ -20,7 +20,7 @@
 
   "utils": {
     "auto-auth": {
-      "enabled": false,
+      "enabled": true,
       "password": "12345678"
     },
 
